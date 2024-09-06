@@ -1,0 +1,57 @@
+class Pessoa:
+    def __init__(self, nome, idade):
+        self.nome = nome
+        self.idade = idade
+        self.endereco = None
+
+    def adicionar_endereco(self, endereco):
+        self.endereco = endereco
+
+    def mostrar_informacao(self):
+        print(f"Nome: {self.nome}, Idade: {self.idade}")
+        if self.endereco:
+            print("Endereço: ")
+            self.endereco.mostrar_endereco()
+        else:
+            print("Endereço nao disponivel")
+
+class Endereco:
+    def __init__(self, rua, cidade, estado, cep):
+        self.rua = rua
+        self.cidade = cidade
+        self.estado = estado
+        self.cep = cep
+
+    def mostrar_endereco(self):
+        print(f"Rua: {self.rua} , Cidade{self.cidade} , Estado: {self.estado}, CEP: {self.cep}")
+
+
+class Empresa:
+    def __init__(self, nome, cep):
+        self.nome = nome
+        self.cep = cep
+        self.funcionario = []
+
+    def contratar_funcionario(self, funcionario):
+        self.funcionario.append(funcionario)
+
+    def listar_funcionario(self):
+        print(f"funcionario da empresa {self.nome}")
+        for funcionario in self.funcionario:
+            print(funcionario.nome)
+
+
+endereco1 = Endereco("Av principal", "Cidade A", "Sao Paulo", "15323542")
+pessoa1 = Pessoa("joao", "23")
+pessoa1.adicionar_endereco(endereco1)
+
+endereco2 = Endereco("Rua secundaria", "cidade B","RIO", "021931")
+pessoa2 = Pessoa("Maria", "1321")
+pessoa2.adicionar_endereco(endereco2)
+
+empresa = Empresa("Rua asdadija" ,"213123")
+empresa.contratar_funcionario(pessoa1)
+empresa.contratar_funcionario(pessoa2)
+
+empresa.listar_funcionario()
+
