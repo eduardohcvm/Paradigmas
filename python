@@ -1,0 +1,150 @@
+class Carro:
+    def __init__(self, marca, modelo, ano, motor):
+        self.motor = motor
+        self.marca = marca
+        self.modelo = modelo
+        self.ano = ano
+        self.velocidade = 0  # Inicializando com 0
+
+    def detalhes(self):
+        return f"Marca: {self.marca}, Modelo: {self.modelo}, Ano: {self.ano}, Motor: {self.motor.detalhes()}"
+
+    def acelerar(self, incremento=10):
+        self.velocidade += incremento
+
+    def frear(self, decremento=10):
+        self.velocidade = max(self.velocidade - decremento, 0)  # Evita velocidade negativa
+
+    def status_velocidade(self):
+        return f"Velocidade atual: {self.velocidade} km/h"
+
+class Motor:
+    def __init__(self, nome, potencia):
+        self.nome = nome
+        self.potencia = potencia
+
+    def detalhes(self):
+        return f"Motor {self.nome}, {self.potencia} HP"
+
+# Criando os carros com motores detalhados
+motor_v8 = Motor("V8", 500)
+motor_v6 = Motor("V6", 300)
+
+carro1 = Carro("Toyota", "Corolla", 2020, motor_v8)
+carro2 = Carro("Ford", "Mustang", 2018, motor_v6)
+
+# Teste
+print(carro1.detalhes())
+carro1.acelerar(20)
+print(carro1.status_velocidade())
+
+print(carro2.detalhes())
+carro2.frear(5)
+print(carro2.status_velocidade())
+
+
+class ContaBancaria:
+    def __init__(self, saldo_inicial, titular):
+        self.__saldo = saldo_inicial
+        self.titular = titular
+
+    def saldo(self):
+        return f"Saldo atual de {self.titular}: R${self.__saldo:.2f}"
+
+    def depositar(self, valor):
+        if valor > 0:
+            self.__saldo += valor
+            return f"Depósito de R${valor:.2f} realizado para {self.titular}."
+        return "Depósito inválido."
+
+    def sacar(self, valor):
+        if valor > self.__saldo:
+            return f"Saldo insuficiente! Saldo atual: R${self.__saldo:.2f}, valor solicitado: R${valor:.2f}"
+        self.__saldo -= valor
+        return f"Saque de R${valor:.2f} realizado para {self.titular}."
+
+# Teste
+conta = ContaBancaria(500, "João")
+print(conta.saldo())
+print(conta.depositar(200))
+print(conta.sacar(800))
+
+
+class Animal:
+    def __init__(self, nome):
+        self.nome = nome
+
+    def som(self):
+        raise NotImplementedError("Subclasse deve implementar esse método.")
+
+class Cachorro(Animal):
+    def som(self):
+        return f"{self.nome} diz: Au au!"
+
+class Gato(Animal):
+    def som(self):
+        return f"{self.nome} diz: Miau!"
+
+# Função para exibir o som de uma lista de animais
+def exibir_sons(animais):
+    for animal in animais:
+        print(animal.som())
+
+# Teste
+animais = [Cachorro("Pandora"), Gato("Mingau"), Cachorro("Sky")]
+exibir_sons(animais)
+
+
+class Escola:
+    def __init__(self, nome):
+        self.nome = nome
+        self.professores = []
+
+    def adicionar_professor(self, professor):
+        if professor not in self.professores:
+            self.professores.append(professor)
+
+    @property
+    def exibir_escola(self):
+        return f"Escola: {self.nome}, Professores: {', '.join([p.nome for p in self.professores])}"
+
+class Professor:
+    def __init__(self, nome, materia):
+        self.nome = nome
+        self.materia = materia
+
+# Teste
+escola = Escola("Unipe")
+professor = Professor("Ricardo", "Programação")
+escola.adicionar_professor(professor)
+print(escola.exibir_escola)
+
+
+
+class Empresa:
+    def __init__(self, nome):
+        self.nome = nome
+        self.empregados = []
+
+    def contratar(self, empregado):
+        self.empregados.append(empregado)
+
+    @property
+    def listar_empregados(self):
+        return f"Empresa: {self.nome}\nEmpregados:\n" + "\n".join([e.detalhes for e in self.empregados])
+
+class Empregado:
+    def __init__(self, nome, cargo, salario):
+        self.nome = nome
+        self.cargo = cargo
+        self.salario = salario
+
+    @property
+    def detalhes(self):
+        return f"{self.nome}, Cargo: {self.cargo}, Salário: R${self.salario:.2f}"
+
+# Teste
+empresa = Empresa("DevTech")
+empregado = Empregado("Luan Alberto", "Desenvolvedor", 5500.00)
+empresa.contratar(empregado)
+print(empresa.listar_empregados)
